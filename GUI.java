@@ -3,23 +3,29 @@ import javax.swing.*;
 
 public class GUI extends JFrame {
 
-	private Container container;					//container posto come attributo per semplicità
-	private Cella[][] prato;						//matrice di celle
+	private Container container;
+	private Cella[][] prato;
+	private int totBombe;
+	private int countCaselleAperte;
 
-	//costruttore
 	public GUI(int righe, int colonne) {
 		super("Prato Fiorito");
 
-		this.container = this.getContentPane();							//strutturazione dell'interfaccia
-		this.container.setLayout(new GridLayout(righe, colonne));
-		// TODO: inserire due pannelli, uno con il contatore e l'altro per il prato!
-		//impostare il layout BorderLayout ponendo il container attuale. contenente il prato come center e il contatore al north.
+		this.container = this.getContentPane();
+
+		this.container.setLayout(new BorderLayout());
+		JPanel topPanel = new JPanel();
+		this.container.add(topPanel, BorderLayout.NORTH);
+		topPanel.add(new JLabel("HELLOOOOO"));
+		JPanel centerPanel = new JPanel();
+		this.container.add(centerPanel, BorderLayout.CENTER);
+		centerPanel.setLayout(new GridLayout(righe, colonne));
 		//definire contatore e inizializzarlo.
 		this.prato = new Cella[righe][colonne];
 		for(int i = 0; i < righe; i++) {
 			for(int j = 0; j < colonne; j++) {
 				prato[i][j] = new Cella();
-				this.container.add(prato[i][j]);
+				centerPanel.add(prato[i][j]);
 			}
 		}
 		//inserimentoBombe()

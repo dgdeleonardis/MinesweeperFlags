@@ -4,10 +4,9 @@ import java.awt.event.*;
 
 public class Cella extends JButton {
 
-    //boolean per verificare che sia stato già scoperto
-    //valore int che indica il valore assegnato al di sopra (-1 bomba, 0/8 bombe nell'intorno)
-    //
-
+    private boolean check;
+    private int contenuto;
+    private boolean bandiera;
 
 	public Cella() {
 		super("1");

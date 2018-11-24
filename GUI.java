@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+import java.util.Random;
 
 public class GUI extends JFrame {
 
@@ -12,7 +13,6 @@ public class GUI extends JFrame {
 		super("Prato Fiorito");
 
 		this.container = this.getContentPane();
-
 		this.container.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
 		this.container.add(topPanel, BorderLayout.NORTH);
@@ -28,22 +28,37 @@ public class GUI extends JFrame {
 				centerPanel.add(prato[i][j]);
 			}
 		}
-		//inserimentoBombe()
-		//popolamentoPrato()
+		inserimentoBombe();
 		setSize(300,300);
 		setVisible(true);
 	}
 
 	private void inserimentoBombe() {
-		//TODO: data la matrice prato e il container, vengono create le celle e inserite le bombe!
-		//ottengo le dimensioni della matrice prato;
-		//definisco il numero massimo di bombe da inserire in percetuale 10/64 e poi finché il contatore non è minore (o uguale) a numero massimo assegno causalmente le bombe (-1)
-		//ricordandomi che se è già presente devo cambiare riferimenti.
-
+		Random ran = new Random();
+		int celleTotali = this.prato.length * this.prato[0].length;
+		this.totBombe = (int) ((double)  celleTotali / 100 * 15);
+		int count = totBombe;
+		while(count != 0) {
+			int rigaRandom = ran.nextInt(this.prato.length);
+			int colonnaRandom = ran.nextInt(this.prato[0].length);
+			if(!this.prato[rigaRandom][colonnaRandom].hasBombInside()) {
+				this.prato[rigaRandom][colonnaRandom].putBomb();
+				incrementatoreIntorno(rigaRandom, colonnaRandom);
+				count--;
+			}
+		}
+ 
 	}
-	private void popolamentoPrato() {
+	private void incrementatoreIntorno(int h, int k) {
 		//TODO: data la matrice prato con le bombe inserite, vengono popolate le celle non aventi le bombe!
 		//scannerizzo ogni cella e vado a vedere quante bombe ha nell'intorno. dopodiché inserisco tale numero.
+		for(int i = h - 1; i <= h + 1; i++) {
+			for(int j = k - 1; j <= k + 1; j++) {
+				if(((i >= 0 && i < this.prato.length) && (j >= 0 && j < this.prato[0].length)) && !(this.prato[i][j].hasBombInside())) {
+					this.prato[i][j].incrementaContenuto();
+				}
+			}
+		}
 	}
 
 
